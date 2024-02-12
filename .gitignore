@@ -22,3 +22,6 @@ override.tf.json
 *.iws
 *.iml
 *.ipr
+
+# Visual Studio Code directory
+.vscode/
