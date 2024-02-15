@@ -20,9 +20,9 @@ variable "region" {
   type = string
 }
 
-variable "credentials_file_path" {
-    type = string
-}
+# variable "credentials_file_path" {
+#     type = string
+# }
 
 variable "protocol" {
   type        = string
