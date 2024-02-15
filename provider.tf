@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = file(var.credentials_file_path)
+  # credentials = file(var.credentials_file_path)
   // credentials of service account dedicated to Terraform
   project     = "csye6225-eashan-roy"
   region      = "us-central1"
