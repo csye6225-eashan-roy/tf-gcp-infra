@@ -1,0 +1,26 @@
+name: Terraform Infra CI workflow
+
+on:
+  pull_request:
+    branches: [main] # CI gets triggered on pull requests to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks out the code into GitHub runner
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      
+      # Initialize a Terraform working directory
+      - name: Terraform Init
+        run: terraform init
+
+      # Canonical format check of all Terraform config files
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      # Validates Terraform code
+      - name: Terraform Validate
+        run: terraform validate
