@@ -1,6 +1,6 @@
 resource "random_string" "resource_name" {
-  length  = 6  # length of the random string
-  special = false  # special characters excluded in the random string
+  length  = 6     # length of the random string
+  special = false # special characters excluded in the random string
   upper   = false # in GCP, names must not include uppercase letters.
 }
 
@@ -25,13 +25,13 @@ variable "region" {
 # }
 
 variable "protocol" {
-  type        = string
-  default     = "tcp"
+  type    = string
+  default = "tcp"
 }
 
 variable "ports" {
-  type        = list(string)
-  default     = ["80", "443"] // HTTP and HTTPS
+  type    = list(string)
+  default = ["80", "443"] // HTTP and HTTPS
 }
 
 variable "source_ranges" {
