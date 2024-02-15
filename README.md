@@ -14,7 +14,7 @@ gcloud config set project csye6225-eashan-roy
 
 - Terraform commands:  
 terraform init  
-terraform fmt  
+terraform fmt
 terraform validate  
 terraform plan  
 terraform apply  
