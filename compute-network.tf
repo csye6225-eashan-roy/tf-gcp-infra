@@ -29,3 +29,31 @@ resource "google_compute_route" "webapp_internet_access" {
   network    = google_compute_network.vpc.name
   next_hop_gateway = "default-internet-gateway"
 }
+
+resource "google_compute_firewall" "allow_ingress_webapp" {
+  name    = "allow-ingress-webapp"
+  network = google_compute_network.vpc.name
+  direction = "INGRESS" // This is the default value and can be omitted
+
+  allow {
+    protocol = var.protocol
+    ports    = var.ports
+  }
+
+  source_ranges = var.source_ranges
+  target_tags   = ["webapp"]
+}
+
+resource "google_compute_firewall" "deny-ingress-db" {
+  name    = "deny-ingress-db"
+  network = google_compute_network.vpc.name
+  direction = "INGRESS"
+ 
+  deny {
+    protocol = var.protocol
+    ports = var.ports
+  }
+ 
+  source_ranges = var.source_ranges
+  source_tags = ["db"]
+}
