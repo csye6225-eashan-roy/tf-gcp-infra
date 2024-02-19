@@ -12,6 +12,10 @@ variable "db-subnet-cidr" {
   type = string
 }
 
+variable "routing-mode" {
+  type = string
+}
+
 variable "webapp-subnet-cidr" {
   type = string
 }
