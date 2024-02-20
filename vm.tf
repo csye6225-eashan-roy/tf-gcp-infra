@@ -1,7 +1,7 @@
 resource "google_compute_instance" "vm_instance" {
-  name         = "webapp-gcp-vm-packer"
-  machine_type = "e2-small"
-  zone         = "us-central1-a"
+  name         = var.vm-name
+  machine_type = var.vm-size
+  zone         = var.vm-zone
 
   depends_on = [
     google_compute_network.vpc,
@@ -14,13 +14,13 @@ resource "google_compute_instance" "vm_instance" {
 
   boot_disk {
     initialize_params {
-      image = "projects/csye6225-eashan-roy/global/images/packer-image-20240220123454"
-      size  = 20
+      image = var.packer-image-path
+      size  = var.vm-storage
     }
   }
 
-  can_ip_forward      = true
-  deletion_protection = false
+  can_ip_forward      = var.vm-can-ip-forward
+  deletion_protection = var.vm-deletion-protection
 
 
   network_interface {
@@ -29,9 +29,9 @@ resource "google_compute_instance" "vm_instance" {
 
   // Define service account permissions (optional)
   service_account {
-    email  = "packer-gcp-custom-images@csye6225-eashan-roy.iam.gserviceaccount.com"
-    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+    email  = var.service-account-email
+    scopes = [var.service-account-scope]
   }
 
-  tags = ["ssh-tag", "http-tag", "https-tag"]
+  tags = var.vm-tags
 }
