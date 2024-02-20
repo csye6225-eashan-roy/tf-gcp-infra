@@ -30,16 +30,27 @@ variable "region" {
 
 variable "protocol" {
   type    = string
-  default = "tcp"
 }
 
-variable "ports" {
-  type    = list(string)
-  default = ["80", "443"] // HTTP and HTTPS
+variable "port-https" {
+  type    = string
 }
+
+variable "port-http" {
+  type = string
+}
+
+variable "port-ssh" {
+  type = string
+}
+
+# variable "ports" {
+#   type    = list(string)
+#   default = ["80", "443", "22"] // HTTP and HTTPS
+# }
 
 variable "source_ranges" {
   description = "CIDR IP ranges that are allowed or denied"
   type        = list(string)
-  default     = ["0.0.0.0/0"]
 }
+
