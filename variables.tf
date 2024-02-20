@@ -29,11 +29,11 @@ variable "region" {
 # }
 
 variable "protocol" {
-  type    = string
+  type = string
 }
 
 variable "port-https" {
-  type    = string
+  type = string
 }
 
 variable "port-http" {

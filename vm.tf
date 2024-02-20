@@ -33,5 +33,5 @@ resource "google_compute_instance" "vm_instance" {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 
-  tags = ["ssh-tag","http-tag","https-tag"]
+  tags = ["ssh-tag", "http-tag", "https-tag"]
 }
