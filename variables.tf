@@ -64,7 +64,7 @@ variable "port-http" {
   type = string
 }
 
-variable "port-ssh" {
+variable "port-8081" {
   type = string
 }
 
@@ -93,7 +93,7 @@ variable "firewall-allow-http-tag" {
   type = string
 }
 
-variable "firewall-allow-ssh-tag" {
+variable "firewall-allow-8081-tag" {
   type = string
 }
 
@@ -149,6 +149,10 @@ variable "vm-deletion-protection" {
 }
 
 variable "vm-storage" {
+  type = string
+}
+
+variable "vm-type" {
   type = string
 }
 

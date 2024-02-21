@@ -9,13 +9,14 @@ resource "google_compute_instance" "vm_instance" {
     google_compute_route.webapp_internet_access,
     google_compute_firewall.allow_http,
     google_compute_firewall.allow_https,
-    google_compute_firewall.allow_ssh
+    google_compute_firewall.allow_application_port
   ]
 
   boot_disk {
     initialize_params {
       image = var.packer-image-path
       size  = var.vm-storage
+      type  = var.vm-type
     }
   }
 
