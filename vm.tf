@@ -25,6 +25,10 @@ resource "google_compute_instance" "vm_instance" {
 
   network_interface {
     subnetwork = google_compute_subnetwork.webapp.self_link
+    access_config {
+      // This block assigns an external IP
+    }
+
   }
 
   // Define service account permissions (optional)

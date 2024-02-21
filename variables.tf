@@ -1,7 +1,28 @@
+##############################################################
+
+#       RANDOM STRING TO BE USED IN RESOURCE NAMES
+
+##############################################################
+
 resource "random_string" "resource_name" {
   length  = 6     # length of the random string
   special = false # special characters excluded in the random string
   upper   = false # in GCP, names must not include uppercase letters.
+}
+
+
+##############################################################
+
+#                    VARIABLES - PROVIDER
+
+##############################################################
+
+variable "project-id" {
+  type = string
+}
+
+variable "provider-region" {
+  type = string
 }
 
 
@@ -84,6 +105,7 @@ variable "firewall-deny-https-tag" {
   type = string
 }
 
+
 ##############################################################
 
 #                    VARIABLES - VM
@@ -129,20 +151,4 @@ variable "vm-deletion-protection" {
 variable "vm-storage" {
   type = string
 }
-
-
-##############################################################
-
-#                    VARIABLES - PROVIDER
-
-##############################################################
-
-variable "project-id" {
-  type = string
-}
-
-variable "provider-region" {
-  type = string
-}
-
 
