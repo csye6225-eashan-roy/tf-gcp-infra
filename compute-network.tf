@@ -30,6 +30,19 @@ resource "google_compute_route" "webapp_internet_access" {
   next_hop_gateway = var.vpc-next-hop-gateway
 }
 
+// Deny all 
+resource "google_compute_firewall" "deny_all" {
+  name    = "deny-all-${random_string.resource_name.result}"
+  network = google_compute_network.vpc.name
+
+  deny {
+    protocol = "all"
+  }
+
+  priority      = 1000
+  source_ranges = var.source_ranges
+}
+
 // Firewall - allow https
 resource "google_compute_firewall" "allow_https" {
   name    = "vpc-allow-https-${random_string.resource_name.result}"
@@ -40,6 +53,7 @@ resource "google_compute_firewall" "allow_https" {
     ports    = [var.port-https]
   }
 
+  priority      = 999
   source_ranges = var.source_ranges
   target_tags   = [var.firewall-allow-https-tag]
 }
@@ -54,23 +68,39 @@ resource "google_compute_firewall" "allow_http" {
     ports    = [var.port-http]
   }
 
+  priority      = 999
   source_ranges = var.source_ranges
   target_tags   = [var.firewall-allow-http-tag]
 }
 
-// Firewall - allow ssh
-resource "google_compute_firewall" "allow_ssh" {
-  name    = "vpc-allow-ssh-${random_string.resource_name.result}"
+// Firewall - allow application port
+resource "google_compute_firewall" "allow_application_port" {
+  name    = "vpc-allow-8081-${random_string.resource_name.result}"
   network = google_compute_network.vpc.name
 
   allow {
     protocol = var.protocol
-    ports    = [var.port-ssh]
+    ports    = [var.port-8081]
   }
 
+  priority      = 999
   source_ranges = var.source_ranges
-  target_tags   = [var.firewall-allow-ssh-tag]
+  target_tags   = [var.firewall-allow-8081-tag]
 }
+
+# // Firewall - allow ssh
+# resource "google_compute_firewall" "allow_ssh" {
+#   name    = "vpc-allow-ssh-${random_string.resource_name.result}"
+#   network = google_compute_network.vpc.name
+
+#   allow {
+#     protocol = var.protocol
+#     ports    = [var.port-ssh]
+#   }
+
+#   source_ranges = var.source_ranges
+#   target_tags   = [var.firewall-allow-ssh-tag]
+# }
 
 // Firewall - deny http
 resource "google_compute_firewall" "deny-ingress-http-db" {
@@ -83,6 +113,7 @@ resource "google_compute_firewall" "deny-ingress-http-db" {
     ports    = [var.port-http]
   }
 
+  priority      = 999
   source_ranges = var.source_ranges
   source_tags   = [var.firewall-deny-http-tag]
 }
@@ -98,6 +129,7 @@ resource "google_compute_firewall" "deny-ingress-https-db" {
     ports    = [var.port-https]
   }
 
+  priority      = 999
   source_ranges = var.source_ranges
   source_tags   = [var.firewall-deny-https-tag]
 }
