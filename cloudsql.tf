@@ -5,11 +5,11 @@ resource "google_sql_database_instance" "cloudsql_instance" {
   region           = var.vpc-region
 
   settings {
-    tier = var.db-tier
+    tier                        = var.db-tier
     deletion_protection_enabled = var.db-deletion-protection
-    availability_type   = var.db-availability-type
-    disk_type           = var.db-disk-type
-    disk_size           = var.db-disk-size
+    availability_type           = var.db-availability-type
+    disk_type                   = var.db-disk-type
+    disk_size                   = var.db-disk-size
 
     ip_configuration {
       ipv4_enabled    = false
