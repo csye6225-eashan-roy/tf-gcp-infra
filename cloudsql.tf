@@ -4,9 +4,14 @@ resource "google_sql_database_instance" "cloudsql_instance" {
   database_version = var.db-version
   region           = var.vpc-region
 
+  depends_on = [
+    google_service_networking_connection.private_vpc_connection
+  ]
+
+  deletion_protection = false
+  
   settings {
     tier                        = var.db-tier
-    deletion_protection_enabled = var.db-deletion-protection
     availability_type           = var.db-availability-type
     disk_type                   = var.db-disk-type
     disk_size                   = var.db-disk-size

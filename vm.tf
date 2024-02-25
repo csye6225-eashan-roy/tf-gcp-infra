@@ -39,7 +39,7 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   metadata = {
-    db_host     = google_sql_database_instance.cloudsql_instance.name
+    db_host     = google_sql_database_instance.cloudsql_instance.private_ip_address
     db_name     = google_sql_database.webapp_database.name
     db_user     = google_sql_user.db_user.name
     db_password = random_password.db_password.result

@@ -172,10 +172,6 @@ variable "db-tier" {
   type = string
 }
 
-variable "db-deletion-protection" {
-  type = bool
-}
-
 variable "db-availability-type" {
   type = string
 }
