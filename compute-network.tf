@@ -16,11 +16,11 @@ resource "google_compute_subnetwork" "webapp" {
 
 // Subnet 2 - db
 resource "google_compute_subnetwork" "db" {
-  name          = "db-subnet-${random_string.resource_name.result}"
-  ip_cidr_range = var.vpc-db-subnet-cidr
-  region        = var.vpc-region
+  name                     = "db-subnet-${random_string.resource_name.result}"
+  ip_cidr_range            = var.vpc-db-subnet-cidr
+  region                   = var.vpc-region
   private_ip_google_access = true
-  network       = google_compute_network.vpc.name
+  network                  = google_compute_network.vpc.name
 }
 
 // Reserve IP range for Private Services Access
