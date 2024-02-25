@@ -156,3 +156,34 @@ variable "vm-type" {
   type = string
 }
 
+
+##############################################################
+
+#                    VARIABLES - Database
+
+##############################################################
+
+
+variable "db-version" {
+  type = string
+}
+
+variable "db-tier" {
+  type = string
+}
+
+variable "db-deletion-protection" {
+  type = bool
+}
+
+variable "db-availability-type" {
+  type = string
+}
+
+variable "db-disk-type" {
+  type = string
+}
+
+variable "db-disk-size" {
+  type = string
+}

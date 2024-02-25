@@ -19,7 +19,24 @@ resource "google_compute_subnetwork" "db" {
   name          = "db-subnet-${random_string.resource_name.result}"
   ip_cidr_range = var.vpc-db-subnet-cidr
   region        = var.vpc-region
+  private_ip_google_access = true
   network       = google_compute_network.vpc.name
+}
+
+// Reserve IP range for Private Services Access
+resource "google_compute_global_address" "private_services_access" {
+  name          = "google-managed-services-${random_string.resource_name.result}"
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  prefix_length = 16
+  network       = google_compute_network.vpc.id
+}
+
+// Connect Google services to VPC
+resource "google_service_networking_connection" "private_vpc_connection" {
+  network                 = google_compute_network.vpc.id
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.private_services_access.name]
 }
 
 // Route for webapp subnet - Internet access
