@@ -38,5 +38,14 @@ resource "google_compute_instance" "vm_instance" {
     scopes = [var.service-account-scope]
   }
 
+  metadata = {
+    db_host     = google_sql_database_instance.cloudsql_instance.name
+    db_name     = google_sql_database.webapp_database.name
+    db_user     = google_sql_user.db_user.name
+    db_password = random_password.db_password.result
+  }
+
+  metadata_startup_script = file("startup_script.sh") // Path to startup script file
+
   tags = var.vm-tags
 }
