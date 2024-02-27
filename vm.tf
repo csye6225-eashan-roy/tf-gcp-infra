@@ -45,7 +45,7 @@ resource "google_compute_instance" "vm_instance" {
     db_password = random_password.db_password.result
   }
 
-  metadata_startup_script = file("vm-startup-script.sh") // Path to startup script file
+  metadata_startup_script = file("startup-script.sh") // Path to startup script file
 
   tags = var.vm-tags
 }
