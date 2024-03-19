@@ -128,10 +128,6 @@ variable "packer-image-path" {
   type = string
 }
 
-variable "service-account-email" {
-  type = string
-}
-
 variable "service-account-scope" {
   type = string
 }

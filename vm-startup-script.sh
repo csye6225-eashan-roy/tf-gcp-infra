@@ -21,6 +21,10 @@ spring.web.resources.add-mappings=false
 spring.jpa.show-sql=true
 EOF
 
+# Reload and start the webapp service
 sudo systemctl daemon-reload
 sudo systemctl enable webapp.service
 sudo systemctl start webapp.service
+
+# Restart the Google Cloud Ops Agent
+sudo systemctl restart google-cloud-ops-agent
