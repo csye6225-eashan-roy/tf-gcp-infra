@@ -1,13 +1,13 @@
 //Service account creation for VM
 resource "google_service_account" "vm_service_account" {
-  account_id   = "vm-service-account"
-  display_name = "VM Service Account"
+  account_id   = var.service_account_id
+  display_name = var.service_account_display_name
 }
 
 //google project binding for this service account to Role: Logging Admin
 resource "google_project_iam_binding" "logging_admin_binding" {
   project = var.project-id
-  role    = "roles/logging.admin"
+  role    = var.logging_admin_role
 
   members = [
     "serviceAccount:${google_service_account.vm_service_account.email}",
@@ -17,7 +17,7 @@ resource "google_project_iam_binding" "logging_admin_binding" {
 //google project binding for this service account to Role: Monitoring Metric Writer
 resource "google_project_iam_binding" "monitoring_metric_writer_binding" {
   project = var.project-id
-  role    = "roles/monitoring.metricWriter"
+  role    = var.monitoring_metric_writer_role
 
   members = [
     "serviceAccount:${google_service_account.vm_service_account.email}",

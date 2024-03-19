@@ -179,3 +179,28 @@ variable "db-disk-type" {
 variable "db-disk-size" {
   type = string
 }
+
+
+##############################################################
+
+#                    VARIABLES - SERVICE ACCOUNT FOR VM
+
+##############################################################
+
+variable "service_account_id" {}
+variable "service_account_display_name" {}
+variable "logging_admin_role" {}
+variable "monitoring_metric_writer_role" {}
+
+
+##############################################################
+
+#                    VARIABLES - DNS
+
+##############################################################
+
+
+variable "dns_name" {}
+variable "dns_type" {}
+variable "dns_ttl" {}
+variable "managed_zone" {}
