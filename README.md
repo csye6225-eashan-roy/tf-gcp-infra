@@ -6,6 +6,10 @@ CSYE6225-eashan-roy
   
 - GCP Service APIs enabled:  
 Compute Engine API  
+Cloud Monitoring API  
+Cloud Logging API  
+Cloud DNS API  
+Service Networking API  
 
 - CLI setup:  
 gcloud auth login   
@@ -21,10 +25,14 @@ terraform apply
 terraform destroy  
 
 - Infra setup  
-1 Compute Network  
-1 public subnet (for web application)  
-1 private subnet (for database)  
-1 route (to Internet Gateway for web application)  
+Compute Network  
+Public subnet (for web application)  
+Private subnet (for database) 
+Compute engine (VM)  
+Route (to Internet Gateway for web application)  
+CloudSQL instance, CloudSQL database, ClouSQL user  
+Service account for VM  
+DNS A record  
 
 - GitHub Actions workflow  
 CI workflow to format and validate terraform code before PR can be merged to organization repo's main branch
