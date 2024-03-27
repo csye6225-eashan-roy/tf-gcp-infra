@@ -204,3 +204,36 @@ variable "dns_name" {}
 variable "dns_type" {}
 variable "dns_ttl" {}
 variable "managed_zone" {}
+
+
+##############################################################
+
+#                    VARIABLES - PUB/SUB
+
+##############################################################
+
+variable "message_storage_region" {}
+variable "pubsub_topic_name" {}
+variable "message_retention_duration" {}
+variable "pubsub_subscription_name" {}
+variable "ack_deadline_seconds" {}
+
+##############################################################
+
+#                    VARIABLES - Cloud Function
+
+##############################################################
+
+variable "bucket_name" {}
+variable "bucket_object_name" {}
+variable "cloud_function_available_memory" {}
+variable "cloud_function_timeout_seconds" {}
+
+
+##############################################################
+
+#                    VARIABLES - VPC Access Connector
+
+##############################################################
+
+variable "vpc_access_connector_ip_cidr_range" {}

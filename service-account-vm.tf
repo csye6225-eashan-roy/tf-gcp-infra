@@ -26,3 +26,13 @@ resource "google_project_iam_binding" "monitoring_metric_writer_binding" {
 
 //The service account (with 'Logging Admin' and 'Monitoring Metric Writer' roles) is assigned to the VM so that  
 //the Ops Agent running on the VM gains the ability to send logs and metrics to Google Cloud's operations suite. 
+
+//google project binding for this service account to Role: Pub/Sub Publisher
+resource "google_project_iam_binding" "vm_pubsub_publisher" {
+  project = var.project-id
+  role    = "roles/pubsub.publisher"
+
+  members = [
+    "serviceAccount:${google_service_account.vm_service_account.email}",
+  ]
+}
