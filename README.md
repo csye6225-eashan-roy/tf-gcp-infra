@@ -10,6 +10,11 @@ Cloud Monitoring API
 Cloud Logging API  
 Cloud DNS API  
 Service Networking API  
+Cloud Build API  
+Cloud Functions API  
+Cloud Pub/Sub API  
+Eventarc API  
+Cloud Run Admin API  
 
 - CLI setup:  
 gcloud auth login   
