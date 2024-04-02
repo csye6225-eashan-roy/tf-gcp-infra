@@ -4,6 +4,10 @@ resource "google_cloudfunctions2_function" "function" {
   description = "A Cloud Function triggered by Pub/Sub to process email verification."
   # runtime     = "java11"
 
+  depends_on = [
+    google_service_account.cloud_function_account
+  ]
+
   build_config {
     runtime     = "java11"
     entry_point = "com.cloud.serverless.EmailVerificationFunction" # Set the entry point
