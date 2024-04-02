@@ -8,10 +8,11 @@ resource "google_compute_network" "vpc" {
 
 // Subnet 1 - webapp
 resource "google_compute_subnetwork" "webapp" {
-  name          = "webapp-subnet-${random_string.resource_name.result}"
-  ip_cidr_range = var.vpc-webapp-subnet-cidr
-  region        = var.vpc-region
-  network       = google_compute_network.vpc.name
+  name                     = "webapp-subnet-${random_string.resource_name.result}"
+  ip_cidr_range            = var.vpc-webapp-subnet-cidr
+  private_ip_google_access = true // Enables VMs in this subnet to access Google APIs and services using their private IP addresses
+  region                   = var.vpc-region
+  network                  = google_compute_network.vpc.name
 }
 
 // Subnet 2 - db
@@ -57,12 +58,12 @@ resource "google_compute_firewall" "deny_all" {
   }
 
   priority      = 1000
-  source_ranges = var.source_ranges
+  source_ranges = var.deny_all_source_ranges
 }
 
 // Firewall - allow https
-resource "google_compute_firewall" "allow_https" {
-  name    = "vpc-allow-https-${random_string.resource_name.result}"
+resource "google_compute_firewall" "allow_https_to_vm_from_ALB" {
+  name    = "allow-https-to-vm-from-alb-${random_string.resource_name.result}"
   network = google_compute_network.vpc.name
 
   allow {
@@ -71,13 +72,13 @@ resource "google_compute_firewall" "allow_https" {
   }
 
   priority      = 999
-  source_ranges = var.source_ranges
-  target_tags   = [var.firewall-allow-https-tag]
+  source_ranges = var.alb-source-ranges
+  target_tags   = [var.firewall-tag-allow-https-to-vm-from-alb]
 }
 
 // Firewall - allow http
-resource "google_compute_firewall" "allow_http" {
-  name    = "vpc-allow-http-${random_string.resource_name.result}"
+resource "google_compute_firewall" "allow_http_to_vm_from_ALB" {
+  name    = "allow-http-to-vm-from-alb-${random_string.resource_name.result}"
   network = google_compute_network.vpc.name
 
   allow {
@@ -86,13 +87,13 @@ resource "google_compute_firewall" "allow_http" {
   }
 
   priority      = 999
-  source_ranges = var.source_ranges
-  target_tags   = [var.firewall-allow-http-tag]
+  source_ranges = var.alb-source-ranges
+  target_tags   = [var.firewall-tag-allow-http-to-vm-from-alb]
 }
 
 // Firewall - allow application port
-resource "google_compute_firewall" "allow_application_port" {
-  name    = "vpc-allow-8081-${random_string.resource_name.result}"
+resource "google_compute_firewall" "allow_application_port_to_vm_from_alb" {
+  name    = "allow-8081-to-vm-from-alb-${random_string.resource_name.result}"
   network = google_compute_network.vpc.name
 
   allow {
@@ -101,22 +102,23 @@ resource "google_compute_firewall" "allow_application_port" {
   }
 
   priority      = 999
-  source_ranges = var.source_ranges
-  target_tags   = [var.firewall-allow-8081-tag]
+  source_ranges = var.alb-source-ranges
+  target_tags   = [var.firewall-tag-allow-8081-to-vm-from-alb]
 }
 
-# // Firewall - allow ssh
+// Firewall - allow ssh
 # resource "google_compute_firewall" "allow_ssh" {
 #   name    = "vpc-allow-ssh-${random_string.resource_name.result}"
 #   network = google_compute_network.vpc.name
 
 #   allow {
 #     protocol = var.protocol
-#     ports    = [var.port-ssh]
+#     ports    = ["22"]
 #   }
 
-#   source_ranges = var.source_ranges
-#   target_tags   = [var.firewall-allow-ssh-tag]
+#   priority      = 999
+#   source_ranges = ["0.0.0.0/0"]
+#   target_tags   = ["allow-ssh"]
 # }
 
 // Firewall - deny http
@@ -131,7 +133,7 @@ resource "google_compute_firewall" "deny-ingress-http-db" {
   }
 
   priority      = 999
-  source_ranges = var.source_ranges
+  source_ranges = var.deny_all_source_ranges
   source_tags   = [var.firewall-deny-http-tag]
 }
 
@@ -147,6 +149,6 @@ resource "google_compute_firewall" "deny-ingress-https-db" {
   }
 
   priority      = 999
-  source_ranges = var.source_ranges
+  source_ranges = var.deny_all_source_ranges
   source_tags   = [var.firewall-deny-https-tag]
 }

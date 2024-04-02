@@ -29,15 +29,9 @@ terraform plan
 terraform apply  
 terraform destroy  
 
-- Infra setup  
-Compute Network  
-Public subnet (for web application)  
-Private subnet (for database) 
-Compute engine (VM)  
-Route (to Internet Gateway for web application)  
-CloudSQL instance, CloudSQL database, ClouSQL user  
-Service account for VM  
-DNS A record  
+- Infra provisioned independent of Terraform
+Cloud storage bucket (zip of cloud function's source code is uploaded here as an object)
+DNS zone (Note: A, SPF, DKIM, MX records are created via tf, only the zone is manually setup)
 
 - GitHub Actions workflow  
 CI workflow to format and validate terraform code before PR can be merged to organization repo's main branch
