@@ -118,7 +118,6 @@ resource "google_compute_firewall" "allow_application_port_to_vm_from_alb" {
 
 #   priority      = 999
 #   source_ranges = ["0.0.0.0/0"]
-#   target_tags   = ["allow-ssh"]
 # }
 
 // Firewall - deny http
