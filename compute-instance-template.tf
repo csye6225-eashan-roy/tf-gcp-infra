@@ -51,7 +51,7 @@ resource "google_compute_instance_template" "webapp_template" {
     //startup-script-url = "gs://${var.startup_script_bucket}/${var.startup_script_object}"
   }
 
-  metadata_startup_script = file("startup-script.sh")
+  metadata_startup_script = file("vm-startup-script.sh")
   can_ip_forward          = var.vm-can-ip-forward
 
   //'scheduling' block controls the preemption behavior and migration options during maintenance events.
