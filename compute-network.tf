@@ -106,7 +106,7 @@ resource "google_compute_firewall" "allow_application_port_to_vm_from_alb" {
   target_tags   = [var.firewall-tag-allow-8081-to-vm-from-alb]
 }
 
-// Firewall - allow ssh
+// Firewall - allow ssh for testing
 # resource "google_compute_firewall" "allow_ssh" {
 #   name    = "vpc-allow-ssh-${random_string.resource_name.result}"
 #   network = google_compute_network.vpc.name

@@ -36,3 +36,11 @@ resource "google_project_iam_binding" "vm_pubsub_publisher" {
     "serviceAccount:${google_service_account.vm_service_account.email}",
   ]
 }
+
+resource "google_kms_crypto_key_iam_binding" "vm_kms_enc_dec" {
+  provider      = google-beta
+  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+  crypto_key_id = google_kms_crypto_key.vm_key.id
+  members = ["serviceAccount:service-547281903181@compute-system.iam.gserviceaccount.com",
+  "serviceAccount:${google_service_account.vm_service_account.email}"]
+}

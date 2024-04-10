@@ -30,7 +30,6 @@ terraform apply
 terraform destroy  
 
 - Infra provisioned independent of Terraform
-Cloud storage bucket (zip of cloud function's source code is uploaded here as an object)
 DNS zone (Note: A, SPF, DKIM, MX records are created via tf, only the zone is manually setup)
 
 - GitHub Actions workflow  

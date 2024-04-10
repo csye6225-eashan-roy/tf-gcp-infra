@@ -216,11 +216,8 @@ variable "ack_deadline_seconds" {}
 
 ##############################################################
 
-variable "bucket_name" {}
-variable "bucket_object_name" {}
 variable "cloud_function_available_memory" {}
 variable "cloud_function_timeout_seconds" {}
-
 
 ##############################################################
 
