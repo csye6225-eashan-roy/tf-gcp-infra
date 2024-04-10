@@ -15,6 +15,9 @@ Cloud Functions API
 Cloud Pub/Sub API  
 Eventarc API  
 Cloud Run Admin API  
+Cloud Build API  
+Cloud Key Management Service (KMS) API  
+
 
 - CLI setup:  
 gcloud auth login   
@@ -23,7 +26,7 @@ gcloud config set project csye6225-eashan-roy
 
 - Terraform commands:  
 terraform init  
-terraform fmt
+terraform fmt  
 terraform validate  
 terraform plan  
 terraform apply  
