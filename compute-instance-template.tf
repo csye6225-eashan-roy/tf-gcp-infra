@@ -11,7 +11,8 @@ resource "google_compute_instance_template" "webapp_template" {
     google_service_account.vm_service_account,
     google_project_iam_binding.logging_admin_binding,
     google_project_iam_binding.monitoring_metric_writer_binding,
-    google_project_iam_binding.vm_pubsub_publisher
+    google_project_iam_binding.vm_pubsub_publisher,
+    google_kms_crypto_key_iam_binding.vm_kms_enc_dec
   ]
 
   disk {
@@ -23,6 +24,9 @@ resource "google_compute_instance_template" "webapp_template" {
 
     boot = var.disk_boot
     //Indicates that this is a boot disk
+    disk_encryption_key {
+      kms_key_self_link = google_kms_crypto_key.vm_key.id
+    }
 
     disk_size_gb = var.vm-storage
     disk_type    = var.vm-type
@@ -32,10 +36,10 @@ resource "google_compute_instance_template" "webapp_template" {
   network_interface {
     network    = google_compute_network.vpc.id
     subnetwork = google_compute_subnetwork.webapp.id
-    //omitted 'access_config' block to make sure no external IPs are assigned to compute instances created via this template
-    # access_config {
-    #   // This block assigns an external IP
-    # }
+
+    access_config {
+      // This block assigns an external IP
+    }
   }
 
   service_account {
@@ -51,7 +55,7 @@ resource "google_compute_instance_template" "webapp_template" {
     //startup-script-url = "gs://${var.startup_script_bucket}/${var.startup_script_object}"
   }
 
-  metadata_startup_script = file("vm-startup-script.sh")
+  metadata_startup_script = file("startup-script.sh")
   can_ip_forward          = var.vm-can-ip-forward
 
   //'scheduling' block controls the preemption behavior and migration options during maintenance events.

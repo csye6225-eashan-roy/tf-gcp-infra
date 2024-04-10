@@ -5,9 +5,10 @@ resource "google_sql_database_instance" "cloudsql_instance" {
   region           = var.vpc-region
 
   depends_on = [
-    google_service_networking_connection.private_vpc_connection
+    google_service_networking_connection.private_vpc_connection,
+    google_kms_crypto_key_iam_binding.sql_kms_enc_dec
   ]
-
+  encryption_key_name = google_kms_crypto_key.sql_key.id
   deletion_protection = false
 
   settings {

@@ -4,8 +4,8 @@ resource "google_compute_region_instance_group_manager" "webapp-mig" {
   region                    = var.vpc-region
   distribution_policy_zones = var.distribution_policy_zones
 
-  target_size = 1 //target number of running instances for this managed instance group
-
+  target_size = 4 //target number of running instances for this managed instance group
+  depends_on  = [google_compute_instance_template.webapp_template]
   lifecycle {
     //The 'target_size' value will fight with autoscaler settings when set, and generally shouldn't be set when using one. 
     //If a value is required, such as to specify a creation-time target size for the MIG, 
@@ -46,7 +46,7 @@ resource "google_compute_region_instance_group_manager" "webapp-mig" {
     max_surge_fixed = 3
     // Allows for one additional instance during updates
 
-    max_unavailable_fixed = 0
+    max_unavailable_fixed = 3
     // Ensures no instances are unavailable during update
   }
 

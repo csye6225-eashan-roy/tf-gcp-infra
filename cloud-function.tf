@@ -16,8 +16,8 @@ resource "google_cloudfunctions2_function" "function" {
     # }
     source {
       storage_source {
-        bucket = var.bucket_name
-        object = var.bucket_object_name
+        bucket = google_storage_bucket.email_verification_function_bucket.name
+        object = google_storage_bucket_object.function_source_archive.name
       }
     }
   }

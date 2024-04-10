@@ -13,9 +13,9 @@ resource "google_project_iam_binding" "cloud_function_pubsub_subscriber" {
   ]
 }
 
-// for Google cloud fucntion to access source code from storage bucket
+// for Google cloud function to access source code from storage bucket
 resource "google_storage_bucket_iam_member" "function_code_viewer" {
-  bucket = "serverless-function-source-bucket"
+  bucket = google_storage_bucket.email_verification_function_bucket.name
   role   = "roles/storage.objectViewer"
   member = "serviceAccount:${google_service_account.cloud_function_account.email}"
 }
@@ -36,5 +36,11 @@ resource "google_project_iam_member" "cloudsql_client" {
 resource "google_project_iam_member" "service_account_token_creator" {
   project = var.project-id
   role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:${google_service_account.cloud_function_account.email}"
+}
+
+resource "google_project_iam_member" "cf_kms_enc_dec" {
+  project = var.project-id
+  role    = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   member  = "serviceAccount:${google_service_account.cloud_function_account.email}"
 }
