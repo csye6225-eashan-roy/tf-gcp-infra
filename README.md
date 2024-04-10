@@ -32,8 +32,9 @@ terraform plan
 terraform apply  
 terraform destroy  
 
-- Infra provisioned independent of Terraform
-DNS zone (Note: A, SPF, DKIM, MX records are created via tf, only the zone is manually setup)
+- Infra provisioned independent of Terraform  
+-- DNS zone (Note: A, SPF, DKIM, MX records are created via tf, only the zone is manually setup)  
+-- Service account for GitHub Actions workflow
 
 - GitHub Actions workflow  
 CI workflow to format and validate terraform code before PR can be merged to organization repo's main branch
